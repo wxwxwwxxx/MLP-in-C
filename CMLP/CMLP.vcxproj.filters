@@ -21,6 +21,15 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mlp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mnist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -29,5 +38,28 @@
     <ClCompile Include="CMLP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mlp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mnist.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test-images.idx3-ubyte">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="test-labels.idx1-ubyte">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="train-images.idx3-ubyte">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="train-labels.idx1-ubyte">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
