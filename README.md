@@ -9,18 +9,18 @@
 
 **代码说明**：
 
-main.cpp：主函数
+`main.cpp`：主函数
 
-define.h：宏定义文件，定义了神经网络需要的超参数
+`define.h`：宏定义文件，定义了神经网络需要的超参数
 	
-mlp.cpp/mlp.h：MLP神经网络具体实现
+`mlp.cpp/mlp.h`：MLP神经网络具体实现
 	
-mnist.cpp/mnist.h：MNIST数据集的相关函数
+`mnist.cpp/mnist.h`：MNIST数据集的相关函数
 
-test-images.idx3-ubyte：MNIST数据集，测试集图片
+`test-images.idx3-ubyte`：MNIST数据集，测试集图片
 
-test-labels.idx1-ubyte：MNIST数据集，测试集标签
+`test-labels.idx1-ubyte`：MNIST数据集，测试集标签
 
-train-images.idx3-ubyte：MNIST数据集，训练集图片
+`train-images.idx3-ubyte`：MNIST数据集，训练集图片
 
-train-labels.idx1-ubyte	：MNIST数据集，训练集标签
+`train-labels.idx1-ubyte`：MNIST数据集，训练集标签
