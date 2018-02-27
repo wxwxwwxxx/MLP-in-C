@@ -24,6 +24,6 @@ int main()
 		cout << i << endl;
 		MLPClear(mlp);
 	}
-	Mnistclose(ftesti, ftestl, ftrainl, ftraini);
+	MnistClose(ftesti, ftestl, ftrainl, ftraini);
 	return 0;
 }

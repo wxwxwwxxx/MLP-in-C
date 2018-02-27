@@ -6,7 +6,7 @@ using namespace std;
 int ReadImages(ifstream&, float c[784]);
 int ReadLabels(ifstream&);
 int MnistInit(ifstream& ftesti, ifstream& ftestl, ifstream& ftrainl, ifstream& ftraini);
-int Mnistclose(ifstream& ftesti, ifstream& ftestl, ifstream& ftrainl, ifstream& ftraini);
+int MnistClose(ifstream& ftesti, ifstream& ftestl, ifstream& ftrainl, ifstream& ftraini);
 int MnistRefresh(ifstream& ftesti, ifstream& ftestl, ifstream& ftrainl, ifstream& ftraini);
 void SaveTrainImages(ifstream& f1);
 void SaveTestImages(ifstream& f1);

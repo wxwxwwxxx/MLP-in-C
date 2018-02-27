@@ -15,7 +15,7 @@ float dsigmoid(float b)
 	return b*(1 - b); // 这里y是指经过激活函数的输出值，而不是自变量
 }
 
-
+//初始化MLP
 void MLPInit(MLP& mlp)
 {
 	float randnum;
@@ -25,8 +25,8 @@ void MLPInit(MLP& mlp)
 	{
 		for (int j = 0; j < 784; j++)
 		{
-			randnum = (((float)rand() / (float)RAND_MAX) - 0.5) * 2;
-			mlp.HL[i].w[j] = randnum/ sqrt(784);
+			randnum = (((float)rand() / (float)RAND_MAX) - 0.5f) * 2.0f;
+			mlp.HL[i].w[j] = randnum/ (float)sqrt(784);
 		}
 		mlp.HL[i].b = 0;
 		mlp.HL[i].output = 0;
@@ -35,19 +35,21 @@ void MLPInit(MLP& mlp)
 	{
 		for (int j = 0; j < LayerNum; j++)
 		{
-			randnum = (((float)rand() / (float)RAND_MAX) - 0.5) * 2;
-			mlp.OL[i].w[j] = randnum/sqrt(LayerNum);
+			randnum = (((float)rand() / (float)RAND_MAX) - 0.5f) * 2.0f;
+			mlp.OL[i].w[j] = randnum/ (float)sqrt(LayerNum);
 		}
 		mlp.OL[i].b = 0;
 		mlp.OL[i].output = 0;
 	}
 	MLPClear(mlp);
 }
+//对MLP进行一次测试
 int MLPTest(MLP& mlp,float image[784])
 {
 	MLPFeedForward(mlp, image);
 	return MLPOutput(mlp);
 }
+//测试MLP神经网络的正确率
 float MLPCorrectRatio(MLP& mlp, ifstream& ftestl, ifstream& ftesti)
 {
 	int correct = 0;
@@ -65,22 +67,25 @@ float MLPCorrectRatio(MLP& mlp, ifstream& ftestl, ifstream& ftesti)
 	}
 	return (float)correct / (float)TestNum;
 }
+//一次前向传播
 void MLPFeedForward(MLP& mlp, float image[784])
 {
-	float sigma = 0;
+	float sigma;
 	for (int i = 0; i < LayerNum; i++)
 	{
+		sigma = 0;
 		for (int j = 0; j < 784; j++)
 		{
 			sigma += mlp.HL[i].w[j] * image[j];
 		}
 		sigma += mlp.HL[i].b;
 		mlp.HL[i].output = sigmoid(sigma);
-		sigma = 0;
+		
 	}
-	sigma = 0;
+	
 	for (int i = 0; i < 10; i++)
 	{
+		sigma = 0;
 		for (int j = 0; j < LayerNum; j++)
 		{
 			sigma += mlp.OL[i].w[j] * mlp.HL[j].output;
@@ -88,9 +93,9 @@ void MLPFeedForward(MLP& mlp, float image[784])
 		}
 		sigma += mlp.OL[i].b;
 		mlp.OL[i].output = sigmoid(sigma);
-		sigma = 0;
 	}
 }
+//对MLP神经网络进行训练（训练次数由宏定义设置）
 void MLPTrain(MLP& mlp,ifstream& ftrainl,ifstream& ftraini)
 {
 	int ans;
@@ -109,12 +114,14 @@ void MLPTrain(MLP& mlp,ifstream& ftrainl,ifstream& ftraini)
 		MLPTrainOnePic(mlp, image, ans);
 	}
 }
+//训练一张图片
 void MLPTrainOnePic(MLP& mlp, float image[784],int ans)
 {
 	MLPFeedForward(mlp, image);
 	MLPBp(mlp, ans);
 	MLPUpdate(mlp, image);
 }
+//反向传播（计算差分值）
 void MLPBp(MLP& mlp,int ans)
 {
 	float output[10],sigma;
@@ -129,17 +136,17 @@ void MLPBp(MLP& mlp,int ans)
 		mlp.e[i] = mlp.OL[i].output - output[i];
 		mlp.OL[i].d= mlp.e[i] * dsigmoid(mlp.OL[i].output);
 	}
-	sigma = 0;
 	for (int j = 0; j < LayerNum; j++)
 	{
+		sigma = 0;
 		for (int i = 0; i<10; i++)
 		{
 			sigma += mlp.OL[i].w[j]*mlp.OL[i].d;
 		}
 		mlp.HL[j].d= sigma*dsigmoid(mlp.HL[j].output);
-		sigma = 0;
 	}
 }
+//清除差分值
 void MLPClear(MLP& mlp)
 {
 	for (int i = 0; i<10; i++)
@@ -151,6 +158,7 @@ void MLPClear(MLP& mlp)
 		mlp.HL[j].d = 0;
 	}
 }
+//权值更新
 void MLPUpdate(MLP& mlp,float image[784])
 {
 	for (int i = 0; i < LayerNum; i++)
@@ -170,6 +178,7 @@ void MLPUpdate(MLP& mlp,float image[784])
 		mlp.OL[i].b = mlp.OL[i].b - mlp.alpha*mlp.OL[i].d ;
 	}		
 }
+//MLP输出（将输出层写入output数组）
 void MLPOutput(float output[10],MLP& mlp)
 {
 	for (int i = 0; i < 10; i++)
@@ -177,6 +186,7 @@ void MLPOutput(float output[10],MLP& mlp)
 		output[i]= mlp.OL[i].output;
 	}
 }
+//MLP输出（输出神经网络运算结果）
 int  MLPOutput(MLP& mlp)
 {
 	float max = mlp.OL[0].output;
